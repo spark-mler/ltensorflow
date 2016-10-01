@@ -36,7 +36,6 @@ def main():
 	b_conv2 = bias_variable([16])
 	h_conv2 = tf.nn.relu(conv2d(h_pool1,W_conv2) + b_conv2)
 	h_pool2 = max_pool_2x2(h_conv2)
-
     W_conv3 = weight_variable([5,5,16,120])
     b_conv3 = bias_variable([6])
     h_conv3 = tf.nn.relu(conv2d(h_pool2, W_conv3)+b_conv3)
@@ -45,7 +44,6 @@ def main():
 	W_fc1 = weight_variable([120,84])
 	b_fc1 = bias_variable([84])
 	h_fc1 = tf.matmul(h_conv3,W_fc1) + b_fc1
-
     W_fc2 = weight_variable([84,10])
 	b_fc2 = bias_variable([10])
 	h_fc2 = tf.matmul(h_fc1,W_fc2) + b_fc2
