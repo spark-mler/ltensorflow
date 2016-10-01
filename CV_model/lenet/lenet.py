@@ -1,8 +1,6 @@
-# -*- coding:utf-8 -*-  
+# -*- coding:utf-8 -*-
 
-from sys import path
 import time
-
 import tensorflow as tf
 
 
@@ -22,9 +20,9 @@ def max_pool_2x2(x):
 
 
 def main():
-	
+
 	sess = tf.InteractiveSession()
-	
+
 	x = tf.placeholder('float',[None,1024])
 	y_ = tf.placeholder('float',[None,10])
 	x_image = tf.reshape(x,[-1,32,32,1])
@@ -42,8 +40,8 @@ def main():
     W_conv3 = weight_variable([5,5,16,120])
     b_conv3 = bias_variable([6])
     h_conv3 = tf.nn.relu(conv2d(h_pool2, W_conv3)+b_conv3)
-    
-	
+
+
 	W_fc1 = weight_variable([120,84])
 	b_fc1 = bias_variable([84])
 	h_fc1 = tf.matmul(h_conv3,W_fc1) + b_fc1
@@ -51,17 +49,17 @@ def main():
     W_fc2 = weight_variable([84,10])
 	b_fc2 = bias_variable([10])
 	h_fc2 = tf.matmul(h_fc1,W_fc2) + b_fc2
-	
+
 
 	y_conv=tf.nn.softmax(h_fc2)
 
 
 	cross_entropy = -tf.reduce_sum(y_*tf.log(y_conv))
 	train_step = tf.train.AdamOptimizer(1e-4).minimize(cross_entropy)
-	
+
 	correct_prediction = tf.equal(tf.argmax(y_conv,1), tf.argmax(y_,1))
 	accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
-	
+
 	saver = tf.train.Saver()
 
 	sess.run(tf.initialize_all_variables())
@@ -81,7 +79,7 @@ def main():
 			print 'time: ',(end_time - start_time)
 			start_time = end_time
 		train_step.run(feed_dict={x: batch_xs, y_: batch_ys, keep_prob: 0.5})
-	
+
 	if not tf.gfile.Exists('model_data'):
 		tf.gfile.MakeDirs('model_data')
 	save_path = saver.save(sess, "model.ckpt")
