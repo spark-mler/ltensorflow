@@ -13,4 +13,5 @@ export PYSPARK_DRIVER_PYTHON=/opt/cloudera/parcels/Anaconda/bin/jupyter
 export PYSPARK_DRIVER_PYTHON_OPTS="notebook --NotebookApp.open_browser=False --NotebookApp.ip='*' --NotebookApp.port=4059"
 export PYSPARK_PYTHON="/opt/cloudera/parcels/Anaconda/bin/python"
 pyspark --total-executor-cores 100 --executor-memory 4G --driver-memory 4G
+pyspark --total-executor-cores 100 --executor-memory 4G --driver-memory 4G --conf --files libknapSack1.so --py-files semDependency.py,sem.py --jars mysql-connector-java-5.1.33.jar
 ```
